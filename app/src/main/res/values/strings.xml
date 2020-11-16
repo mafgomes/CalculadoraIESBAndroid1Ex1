@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Calc Marcelo A F Gomes</string>
+    <string name="button0">0</string>
+    <string name="button1">1</string>
+    <string name="button2">2</string>
+    <string name="button3">3</string>
+    <string name="button4">4</string>
+    <string name="button5">5</string>
+    <string name="button6">6</string>
+    <string name="button7">7</string>
+    <string name="button8">8</string>
+    <string name="button9">9</string>
+    <string name="buttonClear">C</string>
+    <string name="buttonBack"><![CDATA[<-]]></string>
+    <string name="buttonAdd">+</string>
+    <string name="buttonSubtract">-</string>
+    <string name="buttonMultiply">x</string>
+    <string name="buttonDivide">/</string>
+    <string name="buttonDecimalPoint">.</string>
+    <string name="buttonPi">pi</string>
+    <string name="buttonEulerNumber">e</string>
+    <string name="buttonEqualsTo">=</string>
+    <string name="buttonSqrt">sqrt</string>
+    <string name="buttonModulus"><![CDATA[|x|]]></string>
+    <string name="buttonFactorial"><![CDATA[x!]]></string>
+    <string name="buttonPower"><![CDATA[x^y]]></string>
+    <string name="buttonSquare"><![CDATA[x^2]]></string>
+    <string name="buttonInverse">1/x</string>
+    <string name="buttonLog">log</string>
+    <string name="buttonSin">sin</string>
+    <string name="buttonCos">cos</string>
+    <string name="buttonTan">tan</string>
+    <string name="buttonAsin">asin</string>
+    <string name="buttonAcos">acos</string>
+    <string name="buttonAtan">atan</string>
+    <string name="buttonLn">ln</string>
+    <string name="buttonSignChg"><![CDATA[+/-]]></string>
+</resources>

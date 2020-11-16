@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teal_200"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvButtonAsin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonAsin"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonAcos"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glRows67" />
+
+    <TextView
+        android:id="@+id/tvButtonAcos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonAcos"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonAtan"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonAsin"
+        app:layout_constraintTop_toTopOf="@+id/glRows67" />
+
+    <TextView
+        android:id="@+id/tvButtonFactorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonFactorial"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonLogNeperian"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonAtan"
+        app:layout_constraintTop_toTopOf="@+id/glRows67" />
+
+    <TextView
+        android:id="@+id/tvButtonAtan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonAtan"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonFactorial"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonAcos"
+        app:layout_constraintTop_toTopOf="@+id/glRows67" />
+
+    <TextView
+        android:id="@+id/tvButtonLogNeperian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonLn"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonFactorial"
+        app:layout_constraintTop_toTopOf="@+id/glRows67" />
+
+    <TextView
+        android:id="@+id/tvButtonSin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonSin"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows67"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonCos"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glRows56" />
+
+    <TextView
+        android:id="@+id/tvButtonCos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonCos"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows67"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonTan"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonSin"
+        app:layout_constraintTop_toTopOf="@+id/glRows56" />
+
+    <TextView
+        android:id="@+id/tvButtonTan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonTan"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows67"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonInverse"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonCos"
+        app:layout_constraintTop_toTopOf="@+id/glRows56" />
+
+    <TextView
+        android:id="@+id/tvButtonLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonLog"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows67"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonInverse"
+        app:layout_constraintTop_toTopOf="@+id/glRows56" />
+
+    <TextView
+        android:id="@+id/tvButtonInverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonInverse"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows67"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonLog"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonTan"
+        app:layout_constraintTop_toTopOf="@+id/glRows56" />
+
+    <TextView
+        android:id="@+id/tvButtonSignChg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonSignChg"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows56"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonSqrt"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonModulus"
+        app:layout_constraintTop_toTopOf="@+id/glRows45" />
+
+    <TextView
+        android:id="@+id/tvButtonSqrt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonSqrt"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows56"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonPower"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonSignChg"
+        app:layout_constraintTop_toTopOf="@+id/glRows45" />
+
+    <TextView
+        android:id="@+id/tvButtonModulus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonModulus"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows56"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonSignChg"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glRows45" />
+
+    <TextView
+        android:id="@+id/tvButtonPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonPower"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows56"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonSquare"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonSqrt"
+        app:layout_constraintTop_toTopOf="@+id/glRows45" />
+
+    <TextView
+        android:id="@+id/tvButtonSquare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonSquare"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows56"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonPower"
+        app:layout_constraintTop_toTopOf="@+id/glRows45" />
+
+    <TextView
+        android:id="@+id/tvButton0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button0"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows45"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonDecimalPoint"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glRows34" />
+
+    <TextView
+        android:id="@+id/tvButtonPiNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonPi"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows45"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonEulerNumber"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonEqualsTo"
+        app:layout_constraintTop_toTopOf="@+id/glRows34" />
+
+    <TextView
+        android:id="@+id/tvButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button1"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows34"
+        app:layout_constraintEnd_toStartOf="@+id/tvButton2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glRows23" />
+
+    <TextView
+        android:id="@+id/tvButtonDecimalPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonDecimalPoint"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows45"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonEqualsTo"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton0"
+        app:layout_constraintTop_toTopOf="@+id/glRows34" />
+
+    <TextView
+        android:id="@+id/tvButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button5"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows23"
+        app:layout_constraintEnd_toStartOf="@+id/tvButton6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton4"
+        app:layout_constraintTop_toTopOf="@+id/glRows12" />
+
+    <TextView
+        android:id="@+id/tvButton8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button8"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows12"
+        app:layout_constraintEnd_toStartOf="@+id/tvButton9"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton7"
+        app:layout_constraintTop_toTopOf="@+id/glDisplay" />
+
+    <TextView
+        android:id="@+id/tvButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button2"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows34"
+        app:layout_constraintEnd_toStartOf="@+id/tvButton3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton1"
+        app:layout_constraintTop_toTopOf="@+id/glRows23" />
+
+    <TextView
+        android:id="@+id/tvButtonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonAdd"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows23"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonSubtract"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton6"
+        app:layout_constraintTop_toTopOf="@+id/glRows12" />
+
+    <TextView
+        android:id="@+id/tvButtonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonBack"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonClear"
+        app:layout_constraintTop_toTopOf="@+id/glDisplay" />
+
+    <TextView
+        android:id="@+id/tvButton7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button7"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows12"
+        app:layout_constraintEnd_toStartOf="@+id/tvButton8"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glDisplay" />
+
+    <TextView
+        android:id="@+id/tvButtonSubtract"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonSubtract"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows23"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonAdd"
+        app:layout_constraintTop_toTopOf="@+id/glRows12" />
+
+    <TextView
+        android:id="@+id/tvButtonClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonClear"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows12"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonBack"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton9"
+        app:layout_constraintTop_toTopOf="@+id/glDisplay" />
+
+    <TextView
+        android:id="@+id/tvButton6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button6"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows23"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonAdd"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton5"
+        app:layout_constraintTop_toTopOf="@+id/glRows12" />
+
+    <TextView
+        android:id="@+id/tvButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button3"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows34"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonMultiply"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton2"
+        app:layout_constraintTop_toTopOf="@+id/glRows23" />
+
+    <TextView
+        android:id="@+id/tvButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button4"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows23"
+        app:layout_constraintEnd_toStartOf="@+id/tvButton5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glRows12" />
+
+    <TextView
+        android:id="@+id/tvButton9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/button9"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows12"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonClear"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton8"
+        app:layout_constraintTop_toTopOf="@+id/glDisplay" />
+
+    <TextView
+        android:id="@+id/tvButtonDivide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonDivide"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows34"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonMultiply"
+        app:layout_constraintTop_toTopOf="@+id/glRows23" />
+
+    <TextView
+        android:id="@+id/tvButtonMultiply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonMultiply"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows34"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonDivide"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButton3"
+        app:layout_constraintTop_toTopOf="@+id/glRows23" />
+
+    <TextView
+        android:id="@+id/tvButtonEulerNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonEulerNumber"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows45"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonPiNumber"
+        app:layout_constraintTop_toTopOf="@+id/glRows34" />
+
+    <TextView
+        android:id="@+id/tvButtonEqualsTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:text="@string/buttonEqualsTo"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/glRows45"
+        app:layout_constraintEnd_toStartOf="@+id/tvButtonPiNumber"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvButtonDecimalPoint"
+        app:layout_constraintTop_toTopOf="@+id/glRows34" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etCalcDisplay"
+        android:layout_width="346dp"
+        android:layout_height="167dp"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:gravity="start|top"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/glDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRows34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRows23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRows12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRows45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRows56"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRows67"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
