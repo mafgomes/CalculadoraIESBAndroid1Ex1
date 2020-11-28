@@ -25,447 +25,263 @@ import java.lang.Math.log
 import kotlin.math.*
 
 class MainActivity : AppCompatActivity() {
-    val constPi: Double = 3.14159265358979
-    val constEuler: Double = 2.718281828459
-    var previousNumber: Double = 0.0
-    var currentNumber: Double = 0.0
-    var currentFrac: Double = 1.0
-    var currentOp: String = ""
-    var currentDisplayString: String = "0"
-    var typingNumber: Boolean = true
-    val tabBtDispatch = hashMapOf<String, () -> Unit>()
-    val tabOpDispatch = hashMapOf<String, (Double, Double) -> Double>()
+    val constPi                 : Double = 3.14159265358979
+    val constEuler              : Double = 2.718281828459
+    var previousNumber          : Double = 0.0
+    var currentOp               : String = ""
+    var typingNumber            : Boolean = true
+    val tabBtDispatch           = hashMapOf<String, () -> Unit>()
+    val tabUnOpDispatch         = hashMapOf<String, (Double) -> Double>()
+    val tabBinOpDispatch        = hashMapOf<String, (Double, Double) -> Double>()
+    lateinit var display        : CalculatorDisplay
+    val buttonToDisplay         = hashMapOf<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val listenerMappingTable    = hashMapOf<TextView, (String) -> Unit>()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Digit buttons click listeners
-        tvButton0.setOnClickListener() { btDigitPressed(0) }
-        tvButton1.setOnClickListener() { btDigitPressed(1) }
-        tvButton2.setOnClickListener() { btDigitPressed(2) }
-        tvButton3.setOnClickListener() { btDigitPressed(3) }
-        tvButton4.setOnClickListener() { btDigitPressed(4) }
-        tvButton5.setOnClickListener() { btDigitPressed(5) }
-        tvButton6.setOnClickListener() { btDigitPressed(6) }
-        tvButton7.setOnClickListener() { btDigitPressed(7) }
-        tvButton8.setOnClickListener() { btDigitPressed(8) }
-        tvButton9.setOnClickListener() { btDigitPressed(9) }
+        display = CalculatorDisplay(this)
+        display.zeroOut()
 
-        // Other (non-digit) buttons click listeners
-        tvButtonBack.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonDecimalPoint.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonPiNumber.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonEulerNumber.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonAdd.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonSubtract.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonMultiply.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonDivide.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonEqualsTo.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonClear.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonModulus.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonSignChg.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonSqrt.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonPower.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonSquare.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonSin.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonCos.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonTan.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonInverse.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonLog.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonAsin.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonAcos.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonAtan.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonFactorial.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
-        }
-        tvButtonLogNeperian.setOnClickListener() { texto ->
-            dispatchButtonPress((texto as TextView).text.toString())
+        // Table to map the buttons into their respective listeners
+        // Here are the ones that need unique listeners:
+        listenerMappingTable[tvButtonBack]          = ::btBackPressed
+        listenerMappingTable[tvButtonClear]         = ::btClearPressed
+        listenerMappingTable[tvButtonDecimalPoint]  = ::btDecimalPointPressed
+        listenerMappingTable[tvButtonPiNumber]      = ::btPiPressed
+        listenerMappingTable[tvButtonEulerNumber]   = ::btEulerPressed
+        listenerMappingTable[tvButtonEqualsTo]      = ::btEqualsPressed
+        // The listener for all digit buttons is the same
+        listenerMappingTable[tvButton0]             = ::btDigitPressed
+        listenerMappingTable[tvButton1]             = ::btDigitPressed
+        listenerMappingTable[tvButton2]             = ::btDigitPressed
+        listenerMappingTable[tvButton3]             = ::btDigitPressed
+        listenerMappingTable[tvButton4]             = ::btDigitPressed
+        listenerMappingTable[tvButton5]             = ::btDigitPressed
+        listenerMappingTable[tvButton6]             = ::btDigitPressed
+        listenerMappingTable[tvButton7]             = ::btDigitPressed
+        listenerMappingTable[tvButton8]             = ::btDigitPressed
+        listenerMappingTable[tvButton9]             = ::btDigitPressed
+        // Listener for all inary (two-operand) operations
+        listenerMappingTable[tvButtonAdd]           = ::btBinaryOpPressed
+        listenerMappingTable[tvButtonSubtract]      = ::btBinaryOpPressed
+        listenerMappingTable[tvButtonMultiply]      = ::btBinaryOpPressed
+        listenerMappingTable[tvButtonDivide]        = ::btBinaryOpPressed
+        listenerMappingTable[tvButtonPower]         = ::btBinaryOpPressed
+        // Listener for all unary (single-operand) operations
+        listenerMappingTable[tvButtonModulus]       = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonSignChg]       = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonSqrt]          = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonSquare]        = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonSin]           = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonCos]           = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonTan]           = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonInverse]       = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonLog]           = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonAsin]          = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonAcos]          = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonAtan]          = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonFactorial]     = ::btUnaryOpPressed
+        listenerMappingTable[tvButtonLogNeperian]   = ::btUnaryOpPressed
+
+        // Here is where we actually associate the listeners, according to the table above
+        for( tv : TextView in listenerMappingTable.keys ) {
+            tv.setOnClickListener() {
+                listenerMappingTable[tv]?.invoke((it as TextView).text.toString())
+            }
         }
 
-        // Buttons dispatch table for non-digit buttons
-        tabBtDispatch[getString(R.string.buttonBack)]           = ::btBackPressed
-        tabBtDispatch[getString(R.string.buttonEqualsTo)]       = ::btEqualsPressed
-        tabBtDispatch[getString(R.string.buttonAdd)]            = ::btAddPressed
-        tabBtDispatch[getString(R.string.buttonSubtract)]       = ::btSubtractPressed
-        tabBtDispatch[getString(R.string.buttonMultiply)]       = ::btMultiplyPressed
-        tabBtDispatch[getString(R.string.buttonDivide)]         = ::btDividePressed
-        tabBtDispatch[getString(R.string.buttonClear)]          = ::btClearPressed
-        tabBtDispatch[getString(R.string.buttonDecimalPoint)]   = ::btDecimalPointPressed
-        tabBtDispatch[getString(R.string.buttonPi)]             = ::btPiPressed
-        tabBtDispatch[getString(R.string.buttonEulerNumber)]    = ::btEulerPressed
-        tabBtDispatch[getString(R.string.buttonModulus)]        = ::btModulusPressed
-        tabBtDispatch[getString(R.string.buttonSignChg)]        = ::btSignChgPressed
-        tabBtDispatch[getString(R.string.buttonSqrt)]           = ::btSqrtPressed
-        tabBtDispatch[getString(R.string.buttonPower)]          = ::btPowerPressed
-        tabBtDispatch[getString(R.string.buttonSquare)]         = ::btSquarePressed
-        tabBtDispatch[getString(R.string.buttonSin)]            = ::btSinPressed
-        tabBtDispatch[getString(R.string.buttonCos)]            = ::btCosPressed
-        tabBtDispatch[getString(R.string.buttonTan)]            = ::btTanPressed
-        tabBtDispatch[getString(R.string.buttonInverse)]        = ::btInversePressed
-        tabBtDispatch[getString(R.string.buttonLog)]            = ::btLogPressed
-        tabBtDispatch[getString(R.string.buttonAsin)]           = ::btAsinPressed
-        tabBtDispatch[getString(R.string.buttonAcos)]           = ::btAcosPressed
-        tabBtDispatch[getString(R.string.buttonAtan)]           = ::btAtanPressed
-        tabBtDispatch[getString(R.string.buttonFactorial)]      = ::btFactorialPressed
-        tabBtDispatch[getString(R.string.buttonLn)]             = ::btLogNeperianPressed
+        // Binary Operations dispatch table
+        // used to perform the mathematical operation associated with the
+        // buttons that perform operations on two operands (binary operations)
+        tabBinOpDispatch[""]                                    = ::binOpNone
+        tabBinOpDispatch[getString(R.string.buttonAdd)]         = ::opAdd
+        tabBinOpDispatch[getString(R.string.buttonSubtract)]    = ::opSubtract
+        tabBinOpDispatch[getString(R.string.buttonMultiply)]    = ::opMultiply
+        tabBinOpDispatch[getString(R.string.buttonDivide)]      = ::opDivide
+        tabBinOpDispatch[getString(R.string.buttonPower)]       = ::pow
 
-        // Operations dispatch table
-        // used to perform the mathematical operation associated with the button
-        tabOpDispatch[""] = ::opNone
-        tabOpDispatch[getString(R.string.buttonAdd)]        = ::opAdd
-        tabOpDispatch[getString(R.string.buttonSubtract)]   = ::opSubtract
-        tabOpDispatch[getString(R.string.buttonMultiply)]   = ::opMultiply
-        tabOpDispatch[getString(R.string.buttonDivide)]     = ::opDivide
-        tabOpDispatch[getString(R.string.buttonPower)]      = ::opPower
+        // Unary Operations dispatch table
+        // used to perform the mathematical operation associated with the
+        // buttons that perform operations on a single operand (unary operations)
+        tabUnOpDispatch[""]                                     = ::unOpNone
+        tabUnOpDispatch[getString(R.string.buttonModulus)]      = ::opModulus
+        tabUnOpDispatch[getString(R.string.buttonSquare)]       = ::opSquare
+        tabUnOpDispatch[getString(R.string.buttonInverse)]      = ::opInverse
+        tabUnOpDispatch[getString(R.string.buttonSignChg)]      = ::opSignChg
+        tabUnOpDispatch[getString(R.string.buttonLog)]          = ::opLog10
+        tabUnOpDispatch[getString(R.string.buttonLn)]           = ::opLogNeperian
+        tabUnOpDispatch[getString(R.string.buttonFactorial)]    = ::opFactorial
+        tabUnOpDispatch[getString(R.string.buttonSqrt)]         = ::sqrt
+        tabUnOpDispatch[getString(R.string.buttonSin)]          = ::sin
+        tabUnOpDispatch[getString(R.string.buttonCos)]          = ::cos
+        tabUnOpDispatch[getString(R.string.buttonTan)]          = ::tan
+        tabUnOpDispatch[getString(R.string.buttonAsin)]         = ::asin
+        tabUnOpDispatch[getString(R.string.buttonAcos)]         = ::acos
+        tabUnOpDispatch[getString(R.string.buttonAtan)]         = ::atan
+
+        // button name to display string mapping table
+        buttonToDisplay[""]                                     = ""
+        buttonToDisplay[getString(R.string.buttonSignChg)]      = getString(R.string.opSignChange)
+        buttonToDisplay[getString(R.string.buttonAdd)]          = getString(R.string.opAdd)
+        buttonToDisplay[getString(R.string.buttonSubtract)]     = getString(R.string.opSubtract)
+        buttonToDisplay[getString(R.string.buttonMultiply)]     = getString(R.string.opMultiply)
+        buttonToDisplay[getString(R.string.buttonDivide)]       = getString(R.string.opDivide)
+        buttonToDisplay[getString(R.string.buttonPower)]        = getString(R.string.opPower)
+        buttonToDisplay[getString(R.string.buttonModulus)]      = getString(R.string.opModulus)
+        buttonToDisplay[getString(R.string.buttonSqrt)]         = getString(R.string.opSqrt)
+        buttonToDisplay[getString(R.string.buttonSquare)]       = getString(R.string.opSquare)
+        buttonToDisplay[getString(R.string.buttonSin)]          = getString(R.string.opSin)
+        buttonToDisplay[getString(R.string.buttonCos)]          = getString(R.string.opCos)
+        buttonToDisplay[getString(R.string.buttonTan)]          = getString(R.string.opTan)
+        buttonToDisplay[getString(R.string.buttonInverse)]      = getString(R.string.opInverse)
+        buttonToDisplay[getString(R.string.buttonLog)]          = getString(R.string.opLog)
+        buttonToDisplay[getString(R.string.buttonAsin)]         = getString(R.string.opAsin)
+        buttonToDisplay[getString(R.string.buttonAcos)]         = getString(R.string.opAcos)
+        buttonToDisplay[getString(R.string.buttonAtan)]         = getString(R.string.opAtan)
+        buttonToDisplay[getString(R.string.buttonFactorial)]    = getString(R.string.opFactorial)
+        buttonToDisplay[getString(R.string.buttonLn)]           = getString(R.string.opLn)
     }
 
-    // Dispatcher function for non-digit buttons
-    fun dispatchButtonPress(which: String) {
-        Log.d("Digito", "Botão pressionado: $which")
-        Log.d("Digito", "Prev Num:  $previousNumber")
-        Log.d("Digito", "Curr Num:  $currentNumber")
-        Log.d("Digito", "Curr Frac: $currentFrac")
-        Log.d("Digito", "Curr Op:   '$currentOp'")
-        Log.d("Digito", "Curr Str:  '$currentDisplayString'")
-
-        tabBtDispatch[which]?.let { it() }
-        updateCalculatorDisplay()
-    }
-
-    // Generic function for digit buttons (no need to dispatch)
-    private fun btDigitPressed(digito: Int) {
+    // Generic listener function for all digit buttons
+    private fun btDigitPressed(digito: String) {
         Log.d("Digito", "Valor do botão: $digito")
 
-        if (currentFrac - 1.0 > -0.01) {
-            // Esse "if" é necessário!!!
-            // Ele evita que se "continue" a digitar sobre um resultado de operação anterior
-            if (typingNumber) {
-                currentNumber *= 10.0
-                currentNumber += digito.toDouble()
-            } else {
-                currentNumber = digito.toDouble()
-            }
-            currentFrac = 1.0
-        } else {
-            currentNumber += currentFrac * digito.toDouble()
-            currentFrac /= 10.0
+        if( ! typingNumber ) {
+            display.clearCurrentNumber()
         }
         typingNumber = true
-        updateCalculatorDisplay()
+        display.appendDigit(digito)
     }
 
-    // Handler functions for non-digit, non-math-function buttons
-    fun btBackPressed() {
-        if (typingNumber) {
-            if (currentFrac - 1.0 > -0.1) {
-                currentFrac = 1.0
-                currentNumber = truncate(currentNumber / 10.0)
-            } else {
-                currentFrac *= 10.0
-                currentNumber = 10.0 * truncate(currentNumber / (10 * currentFrac)) * currentFrac
-            }
-            if (currentFrac - 0.1 > -0.01) {
-                currentFrac = 1.0
-            }
-        } else {
-            currentNumber = previousNumber
-        }
-    }
-
-    fun btDecimalPointPressed() {
-        currentFrac = 0.1
+    // Listener functions for non-digit buttons, non-math operation buttons
+    fun btDecimalPointPressed(param : String) {
         if (!typingNumber) {
-            currentNumber = 0.0
+            display.clearCurrentNumber()
         }
         typingNumber = true
+        display.update()
     }
 
-    fun btClearPressed() {
-        currentNumber = 0.0
+    fun btBackPressed(param : String) {
+        if( typingNumber ) {
+            display.deleteLastDigit()
+        } else {
+            display.clearCurrentNumber()
+        }
+        display.update()
+    }
+
+    fun btClearPressed(param : String) {
         previousNumber = 0.0
-        currentFrac = 1.0
         typingNumber = true
+        display.zeroOut()
+        display.update()
     }
 
-    fun btPiPressed() {
-        currentNumber = constPi
-        // previousNumber = 0.0
-        currentFrac = 1.0
+    fun btPiPressed(param : String) {
+        display.setCurrentValue(constPi)
+        display.update()
         typingNumber = false
     }
 
-    fun btEulerPressed() {
-        currentNumber = constEuler
-        // previousNumber = 0.0
-        currentFrac = 1.0
+    fun btEulerPressed(param : String) {
+        display.setCurrentValue(constEuler)
+        display.update()
         typingNumber = false
     }
 
-    fun btEqualsPressed() {
-        currentNumber = tabOpDispatch[currentOp]?.invoke(previousNumber, currentNumber) ?: 0.0
-        previousNumber = 0.0
-        currentFrac = 1.0
+    fun btEqualsPressed(param : String) {
+        if( ! currentOp.isNullOrEmpty() ) {
+            val current : Double = display.getCurrentValue()
+
+            display.setCurrentValue(
+                    tabBinOpDispatch[currentOp]?.invoke(previousNumber, current) ?: 0.0)
+            display.newLine(display.formatValue(previousNumber)
+                    + buttonToDisplay[currentOp]
+                    + display.formatValue(current)
+                    + " $param "
+                    + display.formatValue(display.getCurrentValue())            )
+            previousNumber = 0.0
+            currentOp = ""
+        }
+        typingNumber = false
+        display.update()
+    }
+
+    // Gemeric Listener function for all binary Math operation buttons
+    fun btBinaryOpPressed(param : String) {
+        Log.d("Digito", "Apertado o botão '$param'")
+        previousNumber = display.getCurrentValue()
+
+        // Let's hope to yield more meaningful results
+        // by operating on zero, instead of NaN
+        if(previousNumber.isNaN()) {
+            previousNumber = 0.0
+            display.clearCurrentNumber()
+            display.update()
+        }
+        currentOp = param
+        typingNumber = false
+    }
+
+    // Gemeric Listener function for all unary Math operation buttons
+    fun btUnaryOpPressed(param : String) {
+        var current : Double = display.getCurrentValue()
+
+        // Let's hope to yield more meaningful results
+        // by operating on zero, instead of NaN
+        if(current.isNaN()) {
+            current = 0.0
+        }
+
+        Log.d("Digito", "Apertado o botão '$param'")
+
+        display.setCurrentValue(
+                tabUnOpDispatch[param]?.invoke(current) ?: 0.0)
+        display.newLine(buttonToDisplay[param] + display.formatValue(current))
+        previousNumber = display.getCurrentValue()
+        display.update()
         currentOp = ""
         typingNumber = false
     }
 
-    // Handler functions for the Math operation buttons
-    fun btAddPressed() {
-        Log.d("Digito", "Apertado o botão de SOMA!")
-        previousNumber = currentNumber
-        currentNumber = 0.0
-        currentFrac = 1.0
-        currentOp = getString(R.string.buttonAdd)
-        typingNumber = true
-    }
-
-    fun btSubtractPressed() {
-        Log.d("Digito", "Apertado o botão de SUBTRAÇÃO!")
-        previousNumber = currentNumber
-        currentNumber = 0.0
-        currentFrac = 1.0
-        currentOp = getString(R.string.buttonSubtract)
-        typingNumber = true
-    }
-
-    fun btMultiplyPressed() {
-        Log.d("Digito", "Apertado o botão de MULTIPLICAÇÃO!")
-        previousNumber = currentNumber
-        currentNumber = 0.0
-        currentFrac = 1.0
-        currentOp = getString(R.string.buttonMultiply)
-        typingNumber = true
-    }
-
-    fun btDividePressed() {
-        Log.d("Digito", "Apertado o botão de DIVISÃO!")
-        previousNumber = currentNumber
-        currentNumber = 0.0
-        currentFrac = 1.0
-        currentOp = getString(R.string.buttonDivide)
-        typingNumber = true
-    }
-
-    fun btModulusPressed() {
-        Log.d("Digito", "Apertado o botão de MÓDULO!")
-        currentNumber = abs(currentNumber)
-        previousNumber = 0.0
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btSignChgPressed() {
-        Log.d("Digito", "Apertado o botão de MUDAR SINAL!")
-        currentNumber = -currentNumber
-        previousNumber = 0.0
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btSqrtPressed() {
-        Log.d("Digito", "Apertado o botão de RAIZ QUADRADA!")
-        currentNumber = sqrt(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btPowerPressed() {
-        Log.d("Digito", "Apertado o botão de POTENCIAÇÃO!")
-        previousNumber = currentNumber
-        currentNumber = 0.0
-        currentFrac = 1.0
-        currentOp = getString(R.string.buttonPower)
-        typingNumber = true
-    }
-
-    fun btSquarePressed() {
-        Log.d("Digito", "Apertado o botão de ELEVAR AO QUADRADO!")
-        currentNumber = pow(currentNumber, 2.0)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btSinPressed() {
-        Log.d("Digito", "Apertado o botão de SENO!")
-        currentNumber = sin(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btCosPressed() {
-        Log.d("Digito", "Apertado o botão de COSSENO!")
-        currentNumber = cos(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btTanPressed() {
-        Log.d("Digito", "Apertado o botão de TANGENTE!")
-        currentNumber = tan(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btInversePressed() {
-        Log.d("Digito", "Apertado o botão de INVERTER!")
-        currentNumber = 1.0 / currentNumber
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btLogPressed() {
-        Log.d("Digito", "Apertado o botão de LOG10!")
-        currentNumber = log10(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btAsinPressed() {
-        Log.d("Digito", "Apertado o botão de ARCO SENO!")
-        currentNumber = asin(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btAcosPressed() {
-        Log.d("Digito", "Apertado o botão de ARCO COSSENO!")
-        currentNumber = acos(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btAtanPressed() {
-        Log.d("Digito", "Apertado o botão de ARCO TANGENTE!")
-        currentNumber = atan(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btFactorialPressed() {
-        Log.d("Digito", "Apertado o botão de FATORIAL!")
-        currentNumber = factorial(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    fun btLogNeperianPressed() {
-        Log.d("Digito", "Apertado o botão de LOG NEPERIANO!")
-        currentNumber = log(currentNumber)
-        previousNumber = currentNumber
-        currentFrac = 1.0
-        currentOp = ""
-        typingNumber = false
-    }
-
-    // Mathematical operation functions
-    fun opNone(a: Double, b: Double) = currentNumber
+    // Mathematical binary operation functions
+    fun binOpNone(a: Double, b: Double) = display.getCurrentValue() // Unknown operation
     fun opAdd(a: Double, b: Double) = a + b
     fun opSubtract(a: Double, b: Double) = a - b
     fun opMultiply(a: Double, b: Double) = a * b
-    fun opDivide(a: Double, b: Double): Double {
-        if (b != 0.0) {
-            return a / b
-        } else {
-            return 0.0
+    fun opDivide(a: Double, b: Double) = a / b
+
+    // Mathematical unary operation functions
+    fun unOpNone(a: Double) = display.getCurrentValue() // Unknown operation
+    fun opModulus(a: Double) = if( a < 0.0 ) -a else a
+    fun opSquare(a: Double) = a * a
+    fun opInverse(a: Double) = 1.0 / a
+    fun opSignChg(a: Double) = if( a != 0.0 ) -a else a
+
+    // For some reason, instead of returning NaN, log functions abort the app,
+    // so here we explicitly test for invalid arguments before operating on them
+    fun opLog10(a: Double) : Double = if( a <= 0 ) Double.NaN else log10(a)
+    fun opLogNeperian(a: Double) : Double = if( a <= 0 ) Double.NaN else ln(a)
+
+    // Recursive function to calculate the factorial of an given number
+    // Even though the argument is a Double, it's expected to be an integer number,
+    // otherwise, it will return NaN as its result
+    fun opFactorial(x: Double): Double {
+        // If non-integer or negative, return NaN
+        if( (x != floor(x)) or (x < 0.0) ) {
+            return Double.NaN
         }
-    }
 
-    fun opPower(a: Double, b: Double) = pow(a, b)
-
-    fun factorial(x: Double): Double {
-        if (x <= 0)
+        // If equals to zero, return 1
+        if (x == 0.0)
             return 1.0
+        // Otherwise, call itself recursively
         else {
-            return x * factorial(x - 1.0)
+            return x * opFactorial(x - 1.0)
         }
-    }
-
-    // Function to update the calculator's display
-    fun updateCalculatorDisplay() {
-        Log.d("Digito", "--------------------------")
-        Log.d("Digito", "Prev Num:  $previousNumber")
-        Log.d("Digito", "Curr Num:  $currentNumber")
-        Log.d("Digito", "Curr Frac: $currentFrac")
-        Log.d("Digito", "Curr Op:   '$currentOp'")
-        Log.d("Digito", "Curr Str:  '$currentDisplayString'")
-        Log.d("Digito", "==========================")
-
-        if (currentNumber == truncate(currentNumber)) {
-            currentDisplayString = currentNumber.toInt().toString()
-        } else {
-            currentDisplayString = currentNumber.toString()
-        }
-        etCalcDisplay.setText(currentDisplayString)
     }
 }
